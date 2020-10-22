@@ -5,10 +5,12 @@ $connect = new PDO('mysql:host=localhost;dbname=list_pays', 'root', '');
 $pdoStat = $connect->prepare("SELECT * FROM capitales");
 
 $executeIsOk = $pdoStat->execute();
+htmlspecialchars($_GET["pays"]);
 
 //Récupération des resultats //
 
 $pays = $pdoStat->fetchAll();
+$capitale = $pdoStat->fetchAll();
 
 ?>
 
@@ -24,7 +26,7 @@ $pays = $pdoStat->fetchAll();
 </head>
 <body>
 <form method="GET" action="index.php">
-    <select class="custom-select" name="ville">
+    <select class="custom-select" name="pays">
         <option selected="selected">Sélectionner un pays</option>
         <?php foreach ($pays as $value): ?>
             <option value="<?php echo $value['pays']; ?>"><?= $value['pays']; ?></option>
@@ -35,18 +37,8 @@ $pays = $pdoStat->fetchAll();
 </form>
 
 <?php
-if ($_GET['ville'] == 'France'){
-echo 'La capitale de la France est Paris';
-}
-elseif ($_GET['ville'] == 'Allemagne'){
-echo 'La capitale de l\'allemagne est Berlin';
-}
-elseif ($_GET['ville'] == 'Espagne'){
-echo 'La capitale de l\'Espagne est Madrid';
-}
-else {
-echo '';
-}
+
+
 ?>
 
 </body>
