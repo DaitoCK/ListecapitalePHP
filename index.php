@@ -1,16 +1,15 @@
 <?php
 
-$connect = new PDO('mysql:host=localhost;dbname=list_pays', 'root', '');
+$connect = new PDO('mysql:host=localhost;dbname=list_pays', 'root', '',);
 
-$pdoStat = $connect->prepare("SELECT * FROM capitales");
+$pdoStat = $connect->query ("SELECT * FROM capitales ");
 
-$executeIsOk = $pdoStat->execute();
-htmlspecialchars($_GET["pays"]);
 
-//Récupération des resultats //
+
+
+//Récupération du tableau //
 
 $pays = $pdoStat->fetchAll();
-$capitale = $pdoStat->fetchAll();
 
 ?>
 
@@ -27,7 +26,7 @@ $capitale = $pdoStat->fetchAll();
 <body>
 <form method="GET" action="index.php">
     <select class="custom-select" name="pays">
-        <option selected="selected">Sélectionner un pays</option>
+        <option selected="selected">Sélectionner un pays</option>';
         <?php foreach ($pays as $value): ?>
             <option value="<?php echo $value['pays']; ?>"><?= $value['pays']; ?></option>
         <?php endforeach; ?>
@@ -37,9 +36,16 @@ $capitale = $pdoStat->fetchAll();
 </form>
 
 <?php
-
-
+// Vérifier si le formulaire est soumis
+if(isset( $_GET['pays'])) {
+    $pays = $_GET['pays'];
+//manque la requète SQL
+// manque le bindParam
+// manque l'execute
+// manque le fetch capitale
+    echo "La $pays a pour capitale  ";
+    exit;
+}
 ?>
 
 </body>
-</html>
