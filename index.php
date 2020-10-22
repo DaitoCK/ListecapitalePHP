@@ -5,6 +5,19 @@ $connect = new PDO('mysql:host=localhost;dbname=list_pays', 'root', '',);
 $pdoStat = $connect->query ("SELECT * FROM capitales ");
 
 
+// Vérifier si le formulaire est soumis
+if (isset($_GET['pays'])) {
+
+    $country = $_GET['pays'];
+
+    $sql = $connect->prepare("select * from capitales where pays = :pays");
+    $sql->bindparam(":pays", $country);
+    $sql->execute();
+    $fetch= $sql->fetch();
+    $pay = $fetch['capitale'];
+
+    echo "La $country a pour capital $pay";
+}
 
 
 //Récupération du tableau //
@@ -35,17 +48,6 @@ $pays = $pdoStat->fetchAll();
 
 </form>
 
-<?php
-// Vérifier si le formulaire est soumis
-if(isset( $_GET['pays'])) {
-    $pays = $_GET['pays'];
-//manque la requète SQL
-// manque le bindParam
-// manque l'execute
-// manque le fetch capitale
-    echo "La $pays a pour capitale  ";
-    exit;
-}
-?>
+
 
 </body>
